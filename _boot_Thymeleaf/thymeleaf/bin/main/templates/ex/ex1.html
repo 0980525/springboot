@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>컨트롤러에서 보낸 리스트 출력 인라인 방식으로</h1>
+
+	<h2>
+	[ [${list}] ] : 
+	[[${list}]]
+	</h2>
+	
+	<hr>
+	<h2>th:text="${list}" :</h2>
+	<h2 th:text="${list}"></h2>
+	
+	<hr>
+	<hr>
+<h1>th:each 사용 </h1>
+
+<h3>li th:each="str:${list}" th:text="${str}"/</h3>
+	<ul>
+		<li th:each="str:${list}" th:text="${str}"></li>
+	</ul>
+	<hr>
+<h3>li th:each="str:${list}"/ [ [${str}] ]</h3>
+	<ul>
+		<li th:each="str:${list}">[[${str}]]</li>
+	</ul>
+	<hr>
+	<hr>
+	<ul>
+		<th:block th:each="str:${list}">
+			<li>[[${str}]]</li>
+		</th:block>
+	</ul>
+	<hr>
+	<hr>
+<h1>count/index/size</h1>
+	<ul>
+		<li th:each="str,status:${list}">
+		[[${status.count}]] - [[${str}]]
+		</li>
+	</ul>
+	<ul>
+		<li th:each="str,st:${list}">
+		[[${st.index}]] - [[${str}]]
+		</li>
+	</ul>
+	<ul>
+		<li th:each="str,st:${list}">
+		[[${st.size}]] - [[${str}]]
+		</li>
+	</ul>
+	<hr>
+	<hr>
+<h1>odd/even</h1>
+	<ul>
+		<li th:each="str,st:${list}">
+			<span th:if="${st.odd}">ODD-[[${str}]]</span>
+			<span th:unless="${st.odd}">EVEN-[[${str}]]</span>
+		</li>
+	</ul>
+	<hr>
+	<hr>
+<h1>th:text="${st.odd} ? 'ODD ---'+${str}:'EVEN ---'+${str}"</h1>
+	<ul>
+		<li th:each="str,st:${list}">
+			<span th:text="${st.odd} ? 'ODD ---'+${str}:'EVEN ---'+${str}"></span>
+			
+		</li>
+	</ul>
+	<hr>
+	<h1>case에 따라 반복</h1>
+	<ul>
+		<li th:each="str,st:${list}">
+			<th:block th:switch="${st.index % 3}">
+				<span th:case="0">0--[[${str}]]</span>
+				<span th:case="1">1--[[${str}]]</span>
+				<span th:case="2">2--[[${str}]]</span>
+			</th:block>
+		</li>
+	</ul>
+	<hr>
+	<hr>
+	<h3 th:text="${param.name}"></h3>
+	<h3 th:text="${param.age}"></h3>
+	
+	<a th:href="@{/hello}">Go to /hello </a>
+	<a th:href="@{/hello?(name='한글',age='20')}">Go to /hello </a>
+</body>
+</html>
