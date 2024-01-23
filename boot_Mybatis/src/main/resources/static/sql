@@ -1,4 +1,12 @@
---1.23
+--1.23 bootDB생성/bootUser mysql
+
+create user 'bootUser'@'localhost' identified by 'mysql';
+
+grant all privileges on bootDB.*to 'bootUser'@'localhost' with grant option;
+
+flush privileges;
+
+
 create table board(
 bno bigint auto_increment,
 title varchar(200) not null,
