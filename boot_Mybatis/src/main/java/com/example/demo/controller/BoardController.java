@@ -2,9 +2,10 @@ package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.service.annotation.GetExchange;
 
+import com.example.demo.domain.BoardVO;
 import com.example.demo.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,4 +20,10 @@ public class BoardController {
 	
 	@GetMapping("/register")
 	public void register() {}
+	
+	@PostMapping("/register")
+	public String register(BoardVO bvo) {
+		int isOk = bsv.register(bvo);
+		return "/index";
+	}
 }
