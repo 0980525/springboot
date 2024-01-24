@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{layout :: setFragment(~{this::content})}">
+
+	<th:block th:fragment="content">
+		<h2>Board Modify Page</h2>
+		<form action="/board/modify" method="post">
+				<div class="container-md">
+		
+					<div class="mb-3">
+						<label for="bno" class="form-label">No.</label> 
+					<input type="text" name="bno" class="form-control" readonly th:value="${bvo.bno}">
+						
+					</div>
+					<div class="mb-3">
+						<label for="title" class="form-label">제목</label>
+						<input type="text" name="title" class="form-control" id="title" th:value="${bvo.title}">
+					</div>
+					<div class="mb-3">
+						<label for="writer" class="form-label">작성자</label>
+						<input type="text" name="writer" class="form-control" id="writer" readonly th:value="${bvo.writer }">
+					</div>
+					<div class="mb-3">
+						<label for="reg_date" class="form-label">작성일</label> 
+						<input type="text" name="reg_date" class="form-control" id="reg_date" readonly th:value="${bvo.regAt }">
+					</div>
+					<div class="mb-3">
+						<label for="mod_date" class="form-label">수정일</label> 
+						<input type="text" name="mod_date" class="form-control" id="mod_date" readonly th:value="${bvo.modAt }">
+					</div>
+					<div class="mb-3">
+						<label for="content" class="form-label">내용</label>
+						<input type="text" name="content" class="form-control" id="content" th:value="${bvo.content }">
+					</div>
+						
+					
+					<button type="submit" class="btn btn-success">수정</button>
+					<a th:href="@{/board/remove(bno=${bvo.bno })}"><button type="button" class="btn btn-danger">삭제</button></a>
+					<a th:href="@{/board/list}"><button type="button" class="btn btn-primary">목록</button></a><br>
+				</div>
+		</form>
+	</th:block>
+</th:block>
