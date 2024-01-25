@@ -2,8 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{layout :: setFragment(~{this::content})}">
 	<th:block th:fragment="content">
-	
+	<h2>Board List Page</h2>
 		<div class="container-md">
+		
+		<!-- search line -->
+	<div class="col-sm-12 col-md-6">
+		<form action="/board/list">
+			<div class="input-group mb-3">
+				
+				<select class="form-select" name="type" id="inputGroupSelect01">
+					<option th:selected="${ph.pgvo.type==null?true:false}">Choose..</option>
+					<option th:value="t" th:selected="${ph.pgvo.type=='t'? true:false}">Title</option>
+					<option th:value="w" th:selected="${ph.pgvo.type=='w'? true:false}">Writer</option>
+					<option th:value="c" th:selected="${ph.pgvo.type=='c'? true:false}">Content</option>
+					<option th:value="tw" th:selected="${ph.pgvo.type=='tw'? true:false}">Title & content</option>
+					<option th:value="wc" th:selected="${ph.pgvo.type=='wc'? true:false}">Writer & Content</option>
+					<option th:value="tc" th:selected="${ph.pgvo.type=='tc'? true:false}">Title & writer</option>
+					<option th:value="twc" th:selected="${ph.pgvo.type=='twc'? true:false}">All</option>
+				</select> 
+				
+				<input type="search" class="form-control me-2"placeholder="Search" name="keyword" th:value="${ph.pgvo.keyword }" >
+				<input type="hidden" name ="pageNo" th:value="1">
+				<input type="hidden" name ="qty" th:value="${ph.pgvo.qty}">
+				<button class="btn btn-outline-success" type="submit"> Search 
+					<span th:text="${ph.totalCount}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+						${ph.totalCount }
+						<span class="visually-hidden">unread messages</span>
+					</span>
+				</button>
+			</div>
+		</form>
+	</div>
 		
 		<table class="table">
 		<thead>
@@ -33,17 +62,19 @@
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination justify-content-center">
 		    <li th:if="${ph.prev}" class="page-item">
-		      <a class="page-link" href="#" aria-label="Previous">
+		      <a class="page-link" th:href="@{/board/list(pageNo=${ph.startPage-1},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keyword})}" aria-label="Previous">
 		        <span aria-hidden="true">&laquo;</span>
 		      </a>
 		    </li>
+		    <!-- th:classappend=>  -->
 		    
-		    <li th:each="i:${#numbers.sequence(ph.startPage,ph.endPage)}" class="page-item">
-		    	<a class="page-link" href="#">[[${i}]]</a>
+		    <th:block th:each="i:${#numbers.sequence(ph.startPage,ph.endPage)}">
+		    <li class="page-item " th:classappend="${ph.pgvo.pageNo==i?'active':''}">
+		    	<a class="page-link" th:href="@{/board/list(pageNo=${i},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keyword})}">[[${i}]]</a>
 		    </li>
-		    
+		    </th:block>
 		    <li th:if="${ph.next}" class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
+		      <a class="page-link" th:href="@{/board/list(pageNo=${ph.endPage+1},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keyword})}" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		      </a>
 		    </li>

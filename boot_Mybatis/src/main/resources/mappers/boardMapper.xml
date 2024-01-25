@@ -8,6 +8,7 @@
 	  </insert>
 	  <select id="selectList" resultType="com.example.demo.domain.BoardVO">
 	  	select * from board 
+	  	<include refid="search"></include>
 	  	order by bno desc
 	  	limit #{pageStart},#{qty}
 	  </select>
@@ -25,8 +26,28 @@
 	  	delete from board where bno=#{bno}
 	  </delete>
 	  <select id="selectTotalCnt" resultType="int">
-	  	select count(bno) from board
+	  	select count(bno) from board <include refid="search"></include>
 	  </select>
 	  
-	  <select id=""></select>
+	  <sql id="search">
+	  	<if test="type!=null">
+	  		<trim prefix="where (" suffix=")" prefixOverrides="or">
+	  			<foreach collection="typeToArray" item="type">
+	  				<trim prefix="or">
+	  					<choose>
+	  						<when test="type =='t'.toString()">
+	  							title like concat('%',#{keyword},'%')
+	  						</when>
+	  						<when test="type =='w'.toString()">
+	  							writer like concat('%',#{keyword},'%')
+	  						</when>
+	  						<when test="type =='c'.toString()">
+	  							content like concat('%',#{keyword},'%')
+	  						</when>
+	  					</choose>
+	  				</trim>
+	  			</foreach>
+	  		</trim>
+	  	</if>
+	  </sql>
   </mapper>

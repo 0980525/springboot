@@ -48,6 +48,28 @@
 			<a th:href="@{/board/remove(bno=${bvo.bno})}"><button type="button" class="btn btn-danger">삭제</button></a> 
 			<a th:href="@{/board/list}"><button type="button" class="btn btn-primary" id="listBtn">목록</button></a><br> -->
 		
+		<!-- comment line -->
+		<!-- 등록라인 -->
+		<div class="container-sm">
+			<div class="input-group mb-3">
+			  <span class="input-group-text" id="cmtWriter">Anonymous</span>
+			  <input type="text" class="form-control" id="cmtText" placeholder="Test add comment.." aria-label="Username" aria-describedby="basic-addon1">
+			  <button type="button" id="cmtPostBtn">등록</button>
+				
+			</div>
+		</div>
+		
+		<!-- 표시라인 -->
+		<ul class="list-group" id="cmtListArea">
+		  <li class="list-group-item">
+		  	<div>
+		  		<div>Writer</div>
+		  		content for comment
+		  	</div>
+		  	<span>modAt</span>
+		  </li> 
+		</ul>
 		<script th:src="@{/js/boardDetail.js}"></script>
+		<script th:src="@{/js/boardComment.js}"></script>
 	</th:block>
 </th:block>

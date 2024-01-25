@@ -31,7 +31,7 @@ public class BoardController {
 	@PostMapping("/register")
 	public String register(BoardVO bvo) {
 		int isOk = bsv.register(bvo);
-		return "/index";
+		return "redirect:/board/list";
 	}
 	@GetMapping("/list")
 	public void list(Model m,PagingVO pgvo) {
