@@ -13,6 +13,7 @@
 				<th scope="col">writer</th>
 				<th scope="col">Reg At</th>
 				<th scope="col">Mod At</th>
+				
 			</tr>
 		</thead>
 		<tbody>
@@ -27,7 +28,27 @@
 			</th:bolck>
 		</tbody>
 	</table>
+		<!-- 페이지네이션 -->
 		
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination justify-content-center">
+		    <li th:if="${ph.prev}" class="page-item">
+		      <a class="page-link" href="#" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		    
+		    <li th:each="i:${#numbers.sequence(ph.startPage,ph.endPage)}" class="page-item">
+		    	<a class="page-link" href="#">[[${i}]]</a>
+		    </li>
+		    
+		    <li th:if="${ph.next}" class="page-item">
+		      <a class="page-link" href="#" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
 		
 		</div>
 	</th:block>

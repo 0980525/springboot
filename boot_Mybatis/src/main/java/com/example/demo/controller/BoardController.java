@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.Handler.PagingHandler;
 import com.example.demo.domain.BoardVO;
+import com.example.demo.domain.PagingVO;
 import com.example.demo.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -32,10 +34,20 @@ public class BoardController {
 		return "/index";
 	}
 	@GetMapping("/list")
-	public void list(Model m) {
-		List<BoardVO> list = bsv.getList();
+	public void list(Model m,PagingVO pgvo) {
+		log.info(">>>>> pgvo >>>>{}",pgvo);
+		
+		//totalcount
+		int totalCount = bsv.getTotalCount(pgvo);
+		//pagingHandler 객체 생성 
+		PagingHandler ph = new PagingHandler(pgvo, totalCount);
+		List<BoardVO> list = bsv.getList(pgvo);
+		
+		//pagingHandler 객체 보내기
+		
 		log.info(">>>>> list >>>>{}",list);
 		m.addAttribute("list", list);
+		m.addAttribute("ph",ph);
 	}
 	@GetMapping({"/detail","/modify"})
 	public void detail(Model m,@RequestParam("bno") long bno) {
@@ -51,7 +63,7 @@ public class BoardController {
 		// 리다이렉트에 ?로 값ㄱ을 줘서 bno가 두번 붙음 / re.addFlashAttribute("bno",bvo.getBno())-로 하면 디테일페이지로 갈때 오류 생김
 		return "redirect:/board/detail";
 	}
-	@GetMapping("/remove")
+	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") long bno) {
 		bsv.remove(bno);
 		return "redirect:/board/list";
