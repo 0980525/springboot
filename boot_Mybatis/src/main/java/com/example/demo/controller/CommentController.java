@@ -33,8 +33,10 @@ public class CommentController {
 		return isOk >0? "1":"0";			
 	}
 	@GetMapping("/{bno}")
+	@ResponseBody
 	public List<CommentVO> list(@PathVariable("bno") long bno) {
 		List<CommentVO> list= csv.getList(bno);
+		log.info(">>>>bno >>>> {}", bno);
 		return list;
 	}
 }

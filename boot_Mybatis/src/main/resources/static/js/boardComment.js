@@ -1,5 +1,5 @@
 console.log("board comment js.in")
-
+console.log("bnoVal" ,bnoVal);
 document.getElementById('cmtPostBtn').addEventListener('click',()=>{
     const cmtText = document.getElementById('cmtText');
     if(cmtText.value ==null ||cmtText.value == ''){
@@ -8,7 +8,7 @@ document.getElementById('cmtPostBtn').addEventListener('click',()=>{
         return false;
     }else{
         let cmtData={
-            bno:document.getElementById('bnoVal').value,
+            bno:bnoVal,
             writer:document.getElementById('cmtWriter').innerText,
             content:cmtText.value
         };
@@ -18,7 +18,7 @@ document.getElementById('cmtPostBtn').addEventListener('click',()=>{
                 alert('댓글등록');
                 cmtText.value = "";
             }
-            spreadCommentList(cmtData);
+            spreadCommentList(cmtData.bno);
         })
 
     }
