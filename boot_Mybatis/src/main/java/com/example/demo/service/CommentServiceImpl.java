@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.Handler.PagingHandler;
 import com.example.demo.domain.CommentVO;
+import com.example.demo.domain.PagingVO;
 import com.example.demo.repository.CommentMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -23,10 +25,21 @@ public class CommentServiceImpl implements CommentService{
 		return mapper.post(cvo);
 	}
 
+//	@Override
+//	public List<CommentVO> getList(long bno) {
+//		return mapper.getList(bno);
+//		
+//	}
 	@Override
-	public List<CommentVO> getList(long bno) {
-		return mapper.getList(bno);
-		
+	public PagingHandler getList(long bno, PagingVO pgvo) {
+		// controller에서 처리해도 되지만, 처리속도가 더 빨라짐
+		//totalCount
+		int totalCount = mapper.bnoTotalCount(bno);
+		//List
+		List<CommentVO> list = mapper.getList(bno,pgvo);
+		//합쳐서 ph로 생성
+		PagingHandler ph = new PagingHandler(pgvo, totalCount, list);
+		return ph;
 	}
 
 	@Override
@@ -34,4 +47,5 @@ public class CommentServiceImpl implements CommentService{
 		// TODO Auto-generated method stub
 		return mapper.modify(cvo);
 	}
+
 }

@@ -42,9 +42,9 @@ async function postCommentToServer(cmtData){
     }
 }
 
-async function getCommentListFromServer(bno){
+async function getCommentListFromServer(bno,page){
     try {
-        const resp = await fetch("/comment/"+bno);
+        const resp = await fetch("/comment/"+bno+"/"+page);
         const result = await resp.json();
         return result;
     } catch (error) {
@@ -52,15 +52,15 @@ async function getCommentListFromServer(bno){
     }
 }
 
-function spreadCommentList(bno){
-    getCommentListFromServer(bno).then(result=>{
-        
+function spreadCommentList(bno,page=1){
+    getCommentListFromServer(bno,page).then(result=>{
+        console.log(result)
         const ul = document.getElementById('cmtListArea');
-        if(result.length > 0){
-           
+        if(result.cmtList.length > 0){ //cmtList는 ph에 private으로 들어갔음 (댓글 페이지 처리를 위해)
+           if(page == 1){ //1페이지
                 ul.innerHTML ='';
-            
-            for(let cvo of result){
+           }
+            for(let cvo of result.cmtList){
                 let li=`<li class="list-group-item" data-cno="${cvo.cno}" >`;
                 li += `<div class="mb-3">`;
                 li += `<div class="fw-bold">${cvo.writer}</div>`;
@@ -72,7 +72,18 @@ function spreadCommentList(bno){
                 li += `</li>`;
                 ul.innerHTML += li;
             }
-        }else{
+            //댓글 page처리 
+            let moreBtn = document.getElementById('moreBtn');
+            //현재 페이지 번호가 전체 페이지 번호보다 작다면
+            //아직 나와야 할 페이지가 더 있다면 
+             if(result.pgvo.pageNo < result.endPage){ //숨김 속성 해제 , 페이지 +1
+                moreBtn.style.visibility = "visible";
+                moreBtn.dataset.page = page+1;
+             }else{ //더 나와야할 페이지(댓글)이 없으면 다시 숨김
+                //안하면 위에 if가 돌아가서 더보기버튼 누르면 댓글이 반복적으로 나옴 
+                moreBtn.style.visibility="hidden";
+             }
+        }else{ //댓글이 없으면 Comment List Empty 문구 나옴
             let li =`<li class="list-group-item">Comment List Empty</li>`;
             ul.innerHTML = li;
         }
@@ -107,6 +118,9 @@ document.addEventListener('click',(e)=>{
         //삭제
 
 
+    }else if(e.target.id=='moreBtn'){
+        spreadCommentList(bnoVal,parseInt(e.target.dataset.page))
+        
     }
 })
 

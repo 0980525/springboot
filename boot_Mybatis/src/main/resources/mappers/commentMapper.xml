@@ -11,6 +11,10 @@
 		select * from comment 
 		where bno = #{bno}
 		order by cno desc
+		limit #{pgvo.pageStart},#{pgvo.qty}
+	</select>
+	<select id="bnoTotalCount" resultType="int">
+		select count(cno) from comment where bno = #{bno}
 	</select>
 	<update id="modify">
 		update comment set

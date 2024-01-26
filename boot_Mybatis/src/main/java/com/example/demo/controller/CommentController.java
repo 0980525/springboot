@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Handler.PagingHandler;
 import com.example.demo.domain.CommentVO;
+import com.example.demo.domain.PagingVO;
 import com.example.demo.service.CommentService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,12 +35,16 @@ public class CommentController {
 		int isOk = csv.post(cvo);
 		return isOk >0? "1":"0";			
 	}
-	@GetMapping("/{bno}")
+	@GetMapping("/{bno}/{page}")
 	@ResponseBody
-	public List<CommentVO> list(@PathVariable("bno") long bno) {
-		List<CommentVO> list= csv.getList(bno);
-		log.info(">>>>bno >>>> {}", bno);
-		return list;
+	public PagingHandler list(@PathVariable("bno") long bno,@PathVariable("page")int page) {
+		
+		log.info(">>>>bno >>>> {}", bno,"/page >>{}",page);
+		//list + ph.pgvo.qty 값 둘다 필요
+		//비동기 => 한 객체만 전송 가능 => PagingHandler에 List 심어서 가져가기
+		PagingVO pgvo = new PagingVO(page,5); //한 페이지에 5개씩 표시
+		PagingHandler ph = csv.getList(bno,pgvo);
+		return ph;
 	}
 	@PutMapping("/edit")
 	@ResponseBody
