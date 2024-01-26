@@ -18,7 +18,7 @@ document.getElementById('cmtPostBtn').addEventListener('click',()=>{
                 alert('댓글등록');
                 cmtText.value = "";
             }
-            spreadCommentList(cmtData.bno);
+            spreadCommentList(cmtData);
         })
 
     }
@@ -42,9 +42,9 @@ async function postCommentToServer(cmtData){
     }
 }
 
-async function getCommentListFromServer(bno,page){
+async function getCommentListFromServer(bno){
     try {
-        const resp = await fetch("/comment/"+bno+"/"+page);
+        const resp = await fetch("/comment/"+bno);
         const result = await resp.json();
         return result;
     } catch (error) {
@@ -52,15 +52,15 @@ async function getCommentListFromServer(bno,page){
     }
 }
 
-function spreadCommentList(bno,page=1){
-    getCommentListFromServer(bno,page).then(result=>{
+function spreadCommentList(bno){
+    getCommentListFromServer(bno).then(result=>{
         
         const ul = document.getElementById('cmtListArea');
-        if(result.cmtList.length > 0){
-            if(page == 1){
+        if(result.length > 0){
+           
                 ul.innerHTML ='';
-            }
-            for(let cvo of result.cmtList){
+            
+            for(let cvo of result){
                 let li=`<li class="list-group-item" data-cno="${cvo.cno}" >`;
                 li += `<div class="mb-3">`;
                 li += `<div class="fw-bold">${cvo.writer}</div>`;

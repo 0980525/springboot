@@ -69,10 +69,16 @@
 		  	<span>modAt</span>
 		  </li> 
 		</ul>
-		<!-- <script type="text/javascript">
-		spreadCommentList(bno)
-		</script> -->
+		
+		<!--/* bnoVal 를 가져오려고 했을때 사용할수있는 방법 */-->
+		<!--/* <script th:inline="javascript">
+		const bnoVal = [[${bvo.bno}]]
+		
+		</script> */-->
 		<script th:src="@{/js/boardDetail.js}"></script>
 		<script th:src="@{/js/boardComment.js}"></script>
+		<script type="text/javascript">
+		spreadCommentList([[${bvo.bno}]]);
+		</script>
 	</th:block>
 </th:block>

@@ -1,11 +1,14 @@
 package com.example.demo.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.CommentVO;
@@ -22,11 +25,16 @@ public class CommentController {
 
 	private final CommentService csv;
 	
-	@PostMapping(value="/post",consumes="application/json",produces = MediaType.TEXT_PLAIN_VALUE)
-	public ResponseEntity<String> post(@RequestBody CommentVO cvo){
+	@PostMapping("/post")
+	@ResponseBody
+	public String post(@RequestBody CommentVO cvo){
+		log.info(">>CommentVO>>{}",cvo);
 		int isOk = csv.post(cvo);
-		return isOk > 0 ?
-				new ResponseEntity<String>("1",HttpStatus.OK):
-					new ResponseEntity<String>("0",HttpStatus.INTERNAL_SERVER_ERROR);
+		return isOk >0? "1":"0";			
+	}
+	@GetMapping("/{bno}")
+	public List<CommentVO> list(@PathVariable("bno") long bno) {
+		List<CommentVO> list= csv.getList(bno);
+		return list;
 	}
 }
