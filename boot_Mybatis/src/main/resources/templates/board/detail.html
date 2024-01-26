@@ -6,7 +6,7 @@
 		<h2>Board Detail Page</h2>
 		<form action="/board/modify" method="post" id="modForm">
 				<div class="container-md">
-			<input type="hidden" name="bno" th:value="${bvo.bno}"> 
+			<input type="hidden" name="bno" id="bnoVal" th:value="${bvo.bno}"> 
 			<div class="mb-3">
 				<label for="bno" class="form-label">No.</label> 
 				<span th:text="${bvo.bno}"></span>
@@ -69,6 +69,9 @@
 		  	<span>modAt</span>
 		  </li> 
 		</ul>
+		<!-- <script type="text/javascript">
+		spreadCommentList(bno)
+		</script> -->
 		<script th:src="@{/js/boardDetail.js}"></script>
 		<script th:src="@{/js/boardComment.js}"></script>
 	</th:block>

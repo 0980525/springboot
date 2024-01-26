@@ -8,7 +8,7 @@ document.getElementById('cmtPostBtn').addEventListener('click',()=>{
         return false;
     }else{
         let cmtData={
-            bno:bnoVal,
+            bno:document.getElementById('bnoVal').value,
             writer:document.getElementById('cmtWriter').innerText,
             content:cmtText.value
         };
@@ -52,16 +52,25 @@ async function getCommentListFromServer(bno,page){
     }
 }
 
-function spreadCommentList(){
+function spreadCommentList(bno,page=1){
     getCommentListFromServer(bno,page).then(result=>{
-        console.log(result.cmtList);
+        
         const ul = document.getElementById('cmtListArea');
         if(result.cmtList.length > 0){
             if(page == 1){
                 ul.innerHTML ='';
             }
             for(let cvo of result.cmtList){
-                let li=`<li`
+                let li=`<li class="list-group-item" data-cno="${cvo.cno}" >`;
+                li += `<div class="mb-3">`;
+                li += `<div class="fw-bold">${cvo.writer}</div>`;
+                li += `${cvo.content}`;
+                li += `</div>`;
+                li += `<span class="badge rounded-pill text-bg-warning">${cvo.modAt}</span>`;
+                li += `<button type="button" class="btn btn-sm btn-outline-success cmtModBtn" data-bs-toggle="modal" data-bs-target="#myModal">Eidt</button>`;
+                li += `<button type="button" class="btn btn-sm btn-outline-danger cmtDelBtn">Delete</button>`;
+                li += `</li>`;
+                ul.innerHTML += li;
             }
         }
     })
