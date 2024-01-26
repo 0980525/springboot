@@ -8,6 +8,15 @@
 		 values(#{bno},#{writer},#{content})
 	</insert>
 	<select id="getList" resultType="com.example.demo.domain.CommentVO">
-		select * from comment where bno = #{bno}
+		select * from comment 
+		where bno = #{bno}
+		order by cno desc
 	</select>
+	<update id="modify">
+		update comment set
+		content =#{content},
+		mod_at = now()
+		where cno = #{cno}
+		
+	</update>
   </mapper>

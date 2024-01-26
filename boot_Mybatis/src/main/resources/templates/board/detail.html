@@ -70,6 +70,34 @@
 		  </li> 
 		</ul>
 		
+		<!-- moreBtn -->
+		<div class="row">
+			<div class="col d-grid">
+				<button type="button" id="moreBtn" data-page="1" 
+				class="btn btn-outline-dark" style="visibility:hidden">More+</button>
+			</div>
+		</div>
+		
+		<!-- 모달 라인 -->
+		<div class="modal" id="myModal" tabindex="-1">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">댓글작성자 넣고싶음</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <div class="input-group mb-3">
+				  <input type="text" class="form-control" id="cmtTextMod" aria-label="Username" aria-describedby="basic-addon1">
+				  <button type="button" id="cmtModBtn">Post</button>
+				  </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<!--/* bnoVal 를 가져오려고 했을때 사용할수있는 방법 */-->
 		<script th:inline="javascript">
 		const bnoVal = [[${bvo.bno}]]

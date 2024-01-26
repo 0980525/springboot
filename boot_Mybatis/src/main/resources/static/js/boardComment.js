@@ -67,11 +67,63 @@ function spreadCommentList(bno){
                 li += `${cvo.content}`;
                 li += `</div>`;
                 li += `<span class="badge rounded-pill text-bg-warning">${cvo.modAt}</span>`;
-                li += `<button type="button" class="btn btn-sm btn-outline-success cmtModBtn" data-bs-toggle="modal" data-bs-target="#myModal">Eidt</button>`;
+                li += `<button type="button" class="btn btn-sm btn-outline-success mod" data-bs-toggle="modal" data-bs-target="#myModal">Eidt</button>`;
                 li += `<button type="button" class="btn btn-sm btn-outline-danger cmtDelBtn">Delete</button>`;
                 li += `</li>`;
                 ul.innerHTML += li;
             }
+        }else{
+            let li =`<li class="list-group-item">Comment List Empty</li>`;
+            ul.innerHTML = li;
         }
     })
+}
+
+document.addEventListener('click',(e)=>{
+    if(e.target.classList.contains('mod')){
+        //댓글 수정 
+        //타겟에서 가장 가까운 li 찾기 : 내 버튼이 포함되어있는 li 찾기
+        let li = e.target.closest('li');
+        let cmtText = li.querySelector('.fw-bold').nextSibling;
+        console.log(cmtText);
+        document.getElementById('cmtTextMod').value = cmtText.nodeValue;
+        document.getElementById('cmtModBtn').setAttribute("data-cno",li.dataset.cno);
+    }else if(e.target.id=='cmtModBtn'){
+        
+        //모달수정 버튼
+        let cmtDataMod={
+            cno:e.target.dataset.cno,
+            content:document.getElementById('cmtTextMod').value
+        };
+
+        editCommentToServer(cmtDataMod).then(result =>{
+            if(result ==="1"){
+                alert("수정완료");
+                document.querySelector(".btn-close").click();
+            }
+            spreadCommentList(bnoVal);
+        })
+    }else if(e.target.classList.contains('cmtDelBtn')){
+        //삭제
+
+
+    }
+})
+
+async function editCommentToServer(cmtDataMod){
+    try {
+        const url = "/comment/edit";
+        const config = {
+            method:'put',
+            headers:{
+                'content-type':'application/json; charset=utf-8'
+            },
+            body:JSON.stringify(cmtDataMod)
+        };
+        const resp = await fetch(url, config);
+        const result = resp.text();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
 }

@@ -13,4 +13,6 @@ public interface CommentMapper {
 
 	List<CommentVO> getList(long bno);
 
+	int modify(CommentVO cvo);
+
 }

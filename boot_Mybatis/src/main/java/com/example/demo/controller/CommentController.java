@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,5 +39,12 @@ public class CommentController {
 		List<CommentVO> list= csv.getList(bno);
 		log.info(">>>>bno >>>> {}", bno);
 		return list;
+	}
+	@PutMapping("/edit")
+	@ResponseBody
+	public String edit(@RequestBody CommentVO cvo) {
+		log.info(">>CommentVO>>{}",cvo);
+		int isOk = csv.modify(cvo);
+		return isOk > 0?"1":"0";
 	}
 }

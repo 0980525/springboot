@@ -28,4 +28,10 @@ public class CommentServiceImpl implements CommentService{
 		return mapper.getList(bno);
 		
 	}
+
+	@Override
+	public int modify(CommentVO cvo) {
+		// TODO Auto-generated method stub
+		return mapper.modify(cvo);
+	}
 }
