@@ -9,4 +9,7 @@
 				values(#{uuid},#{saveDir},#{fileName},#{fileType},#{bno},#{fileSize})
 		</insert>
   
+  		<select id="getFileList" resultType="com.example.demo.domain.FileVO">
+  			select * from file where bno = #{bno}
+  		</select>
   </mapper>

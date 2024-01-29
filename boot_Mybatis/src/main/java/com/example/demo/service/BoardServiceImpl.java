@@ -43,9 +43,13 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.selectList(pgvo);
 	}
 
+	@Transactional
 	@Override
-	public BoardVO getDetail(long bno) {
-		return mapper.selectDetail(bno);
+	public BoardDTO getDetail(long bno) {
+		BoardDTO bdto=new BoardDTO();
+		bdto.setBvo(mapper.selectDetail(bno));
+		bdto.setFlist(FileMapper.getFileList(bno));
+		return bdto;
 	}
 
 	@Override
