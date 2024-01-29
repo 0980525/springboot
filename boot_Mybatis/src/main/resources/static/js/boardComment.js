@@ -61,7 +61,7 @@ function spreadCommentList(bno,page=1){
                 ul.innerHTML ='';
            }
             for(let cvo of result.cmtList){
-                let li=`<li class="list-group-item" data-cno="${cvo.cno}" >`;
+                let li=`<li class="list-group-item" data-cno="${cvo.cno}" data-writer="${cvo.writer} >`;
                 li += `<div class="mb-3">`;
                 li += `<div class="fw-bold">${cvo.writer}</div>`;
                 li += `${cvo.content}`;
@@ -99,11 +99,13 @@ document.addEventListener('click',(e)=>{
         console.log(cmtText);
         document.getElementById('cmtTextMod').value = cmtText.nodeValue;
         document.getElementById('cmtModBtn').setAttribute("data-cno",li.dataset.cno);
+        document.getElementById('cmtModBtn').setAttribute("data-writer",li.dataset.writer);
     }else if(e.target.id=='cmtModBtn'){
         
         //모달수정 버튼
         let cmtDataMod={
             cno:e.target.dataset.cno,
+            writer:e.target.dataset.writer,
             content:document.getElementById('cmtTextMod').value
         };
 
@@ -116,7 +118,16 @@ document.addEventListener('click',(e)=>{
         })
     }else if(e.target.classList.contains('cmtDelBtn')){
         //삭제
+        let li = e.target.closest('li');
+        let cnoVal = li.dataset.cno;
 
+        deleteCommentFromServer(cnoVal).then(result=>{
+            console.log("delete Comment cnoVal >>>> ",cnoVal);
+            if(result == 1){
+                alert("댓글 삭제 완료");
+                spreadCommentList(bnoVal);
+            }
+        })
 
     }else if(e.target.id=='moreBtn'){
         spreadCommentList(bnoVal,parseInt(e.target.dataset.page))
@@ -136,6 +147,20 @@ async function editCommentToServer(cmtDataMod){
         };
         const resp = await fetch(url, config);
         const result = resp.text();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function deleteCommentFromServer(cno){
+    try {
+        const url='/comment/del/'+cno;
+        const config ={
+            method : 'delete'
+        };
+        const resp = await fetch(url,config);
+        const result = await resp.text();
         return result;
     } catch (error) {
         console.log(error);

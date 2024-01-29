@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.BoardVO;
 import com.example.demo.domain.PagingVO;
 
@@ -21,5 +22,7 @@ public interface BoardMapper {
 	void delete(long bno);
 
 	int selectTotalCnt(PagingVO pgvo);
+
+	long getBno();
 
 }

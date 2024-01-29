@@ -12,6 +12,9 @@
 	  	order by bno desc
 	  	limit #{pageStart},#{qty}
 	  </select>
+	  <select id="getBno" resultType="long">
+	  	select max(bno) from board
+	  </select>
 	  <select id="selectDetail" resultType="com.example.demo.domain.BoardVO">
 	  	select * from board where bno = #{bno}
 	  </select>

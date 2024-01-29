@@ -48,4 +48,11 @@ public class CommentServiceImpl implements CommentService{
 		return mapper.modify(cvo);
 	}
 
+	@Override
+	public int remove(long cno) {
+		return mapper.delete(cno);
+		
+		
+	}
+
 }
