@@ -28,6 +28,7 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	
 	annotationProcessor 'org.projectlombok:lombok'
 	
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'
@@ -39,6 +40,9 @@ dependencies {
 	implementation 'org.apache.tika:tika-core:2.4.1'
 	implementation 'org.apache.tika:tika-parsers:2.4.1'
 	implementation 'net.coobird:thumbnailator:0.4.17'
+	implementation "org.springframework.boot:spring-boot-starter-security"
+	
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
