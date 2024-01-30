@@ -29,4 +29,8 @@ public class AuthMember extends User{
 								.collect(Collectors.toList()));
 		this.mvo = mvo;
 	}
+	
+	public MemberVO getMvo() {
+		return mvo;
+	}
 }

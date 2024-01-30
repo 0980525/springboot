@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="setFragment(content)">
 <head>
 <meta charset="UTF-8">
@@ -27,17 +28,26 @@
          <li class="nav-item">
           <a class="nav-link" href="/board/list">BoardList</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" sec:authorize="isAuthenticated()">
           <a class="nav-link" href="/board/register">Register</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" sec:authorize="isAnonymous()">
           <a class="nav-link" href="/member/register">Join</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" sec:authorize="isAnonymous()">
           <a class="nav-link" href="/member/login">Login</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+          <a class="nav-link" href="#">MemberList</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
           <a class="nav-link" href="#">Logout</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+          <!--  <a class="nav-link" th:href="@{/member/modify}" th:text="${#authentication.name}"></a> -->
+          <a class="nav-link" th:href="@{/member/modify}"
+           th:with="auth=${#authentication.getPrincipal()}"
+           th:text="${auth.mvo.nickName}"></a>
         </li>
       </ul>
     </div>
