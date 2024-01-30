@@ -13,4 +13,8 @@ public interface FileMapper {
 
 	List<FileVO> getFileList(long bno);
 
+	void delete(long bno);
+
+	
+
 }

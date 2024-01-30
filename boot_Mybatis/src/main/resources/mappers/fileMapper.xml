@@ -12,4 +12,8 @@
   		<select id="getFileList" resultType="com.example.demo.domain.FileVO">
   			select * from file where bno = #{bno}
   		</select>
+  		
+  		<delete id="delete">
+  			delete from file where bno = #{bno}
+  		</delete>
   </mapper>

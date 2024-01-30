@@ -68,10 +68,15 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO bvo,RedirectAttributes re) {
+	public String modify(BoardVO bvo,RedirectAttributes re,@RequestParam(name="files",required = false)MultipartFile[]files) {
 		
 		log.info(">>>> bvo>>>" +bvo);
-		int isOk = bsv.modify(bvo);
+		List<FileVO> flist=null;
+		if(files[0].getSize()>0 || files != null) {
+			 flist= fh.uploadFiles(files);
+		}
+		
+		bsv.modify(new BoardDTO(bvo,flist));
 		re.addAttribute("bno", bvo.getBno());
 		// 리다이렉트에 ?로 값ㄱ을 줘서 bno가 두번 붙음 / re.addFlashAttribute("bno",bvo.getBno())-로 하면 디테일페이지로 갈때 오류 생김
 		return "redirect:/board/detail";
