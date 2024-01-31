@@ -17,5 +17,7 @@
   <insert id="insertAuthinit">
   insert into auth_member values (#{email},'ROLE_USER')
   </insert>
-  
+  <select id="getList" resultType="com.example.demo.security.MemberVO">
+  	select * from member 
+  </select>
   </mapper>

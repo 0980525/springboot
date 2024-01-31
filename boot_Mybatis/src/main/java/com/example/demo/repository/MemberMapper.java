@@ -18,4 +18,6 @@ public interface MemberMapper {
 
 	int insertAuthinit(String email);
 
+	List<MemberVO> getList(MemberVO mvo);
+
 }

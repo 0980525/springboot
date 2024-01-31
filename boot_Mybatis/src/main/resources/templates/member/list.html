@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{layout :: setFragment(~{this::content})}">
+	<th:block th:fragment="content">
+		<h2>Member List Page</h2>
+		<div class="container-md">
+		
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">email</th>
+					<th scope="col">pwd</th>
+					<th scope="col">Reg At</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<th:bolck th:each="list : ${list}">
+					<tr>
+						<th scope="row"></th>
+						<td th:text="${list.email}"></td>
+						<td th:text="${list.pwd}"></td>
+						<td th:text="${list.regAt}"></td>
+					</tr>
+				</th:bolck>
+			</tbody>
+		</table>
+		
+		</div>
+	</th:block>
+</th:block>
+</html>

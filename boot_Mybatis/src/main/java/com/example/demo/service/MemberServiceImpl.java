@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.repository.MemberMapper;
@@ -18,5 +20,11 @@ public class MemberServiceImpl implements MemberService{
 	public int insert(MemberVO mvo) {
 		int isOk = memberMapper.insert(mvo);
 		return memberMapper.insertAuthinit(mvo.getEmail());
+	}
+
+	@Override
+	public List<MemberVO> getList(MemberVO mvo) {
+		log.info(" Member serviceImpl");
+		return memberMapper.getList(mvo);
 	}
 }
