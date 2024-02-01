@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{layout :: setFragment(~{this::content})}">
+
+	<th:block th:fragment="content">
+		<h2>Board Register Page</h2>
+		
+		<form action="/board/register" method="post" enctype="multipart/form-data">
+		<div class="mb-3">
+			<label for="title" class="form-label">Title</label> 
+			<input type="text" name="title" class="form-control" id="title" placeholder="Title...">
+		</div>
+		<div class="mb-3">
+			<label for="writer" class="form-label">Writer</label> 
+			<input type="text" name="writer" class="form-control" id="writer" placeholder="writer...">
+		</div>
+		<div class="mb-3">
+			<label for="content" class="form-label">Content</label>
+			<textarea name="content" class="form-control" id="content" rows="3" placeholder="content..."></textarea>
+		</div>
+		<!-- 파일 -->
+		<div class="mb-3">
+			<label for="file" class="form-label">file : </label> 
+			<input type="file" name="files" class="form-control" id="files" multiple="multiple" style="display: none"><br>
+			<div class="col-12" id="filezone"></div>
+			<!-- 파일 버튼 트리거 사용하기 위해서 주는 버튼 -->
+			
+			<button type="button" class="btn btn-primary" id="trigger">File Upload</button>
+		</div>
+		
+		<button type="submit" class="btn btn-primary" id="regBtn">submit</button>
+		
+	</form>
+	
+	</th:block>
+</th:block>
